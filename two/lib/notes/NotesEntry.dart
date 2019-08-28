@@ -99,7 +99,89 @@ class NotesEntry extends StatelessWidget {
                                           return null;
                                         }
                                       )
-                                    )    
+                                    ),
+                                    ListTile(
+                                          leading : Icon(Icons.color_lens),
+                                          title : Row(
+                                          children : [
+                                                      GestureDetector(
+                                                        child : Container(
+                                                          decoration : ShapeDecoration(
+                                                            shape : Border.all(width : 18, color : Colors.red) +
+                                                            Border.all(width : 6,
+                                                              color : notesModel.color == "red" ? Colors.red : Theme.of(inContext).canvasColor
+                                                            )
+                                                          )
+                                                        ),
+                                                        onTap : () {
+                                                          notesModel.entityBeingEdited.color = "red";
+                                                          notesModel.setColor("red");
+                                                        }
+                                                      ),
+                                                      Spacer(),
+                                                      GestureDetector(
+                                                        child : Container(
+                                                          decoration : ShapeDecoration(
+                                                            shape : Border.all(width : 18, color : Colors.blue) +
+                                                            Border.all(width : 6,
+                                                              color : notesModel.color == "blue" ? Colors.blue : Theme.of(inContext).canvasColor
+                                                            )
+                                                          )
+                                                        ),
+                                                        onTap : () {
+                                                          notesModel.entityBeingEdited.color = "blue";
+                                                          notesModel.setColor("blue");
+                                                        }
+                                                      ),
+                                                      Spacer(),
+                                                      GestureDetector(
+                                                          child : Container(
+                                                            decoration : ShapeDecoration(
+                                                              shape : Border.all(width : 18, color : Colors.green) +
+                                                              Border.all(width : 6,
+                                                                color : notesModel.color == "green" ? Colors.green : Theme.of(inContext).canvasColor
+                                                              )
+                                                            )
+                                                          ),
+                                                          onTap : () {
+                                                            notesModel.entityBeingEdited.color = "green";
+                                                            notesModel.setColor("green");
+                                                          }
+                                                        ),
+                                                        Spacer(),
+                                                        GestureDetector(
+                                                          child : Container(
+                                                            decoration : ShapeDecoration(
+                                                              shape : Border.all(width : 18, color : Colors.purple) +
+                                                              Border.all(width : 6,
+                                                                color : notesModel.color == "purple" ? Colors.purple : Theme.of(inContext).canvasColor
+                                                              )
+                                                            )
+                                                          ),
+                                                          onTap : () {
+                                                            notesModel.entityBeingEdited.color = "purple";
+                                                            notesModel.setColor("purple");
+                                                          }
+                                                        ),
+                                                        Spacer(),
+                                                        GestureDetector(
+                                                          child : Container(
+                                                            decoration : ShapeDecoration(
+                                                              shape : Border.all(width : 18, color : Colors.brown) +
+                                                              Border.all(width : 6,
+                                                                color : notesModel.color == "brown" ? Colors.brown : Theme.of(inContext).canvasColor
+                                                              )
+                                                            )
+                                                          ),
+                                                          onTap : () {
+                                                            notesModel.entityBeingEdited.color = "brown";
+                                                            notesModel.setColor("brown");
+                                                          }
+                                                        ),
+                                                      
+                                          ]
+                                          ),
+                                      )        
                                   ]
                                 )
                            ),         
