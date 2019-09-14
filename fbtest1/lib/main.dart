@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import './cloudfs.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,6 +12,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Google Maps Demo',
       home: MapSample(),
+      routes: {
+        '/cloudfs': (context) => CloudFSPage(),
+      },
+
     );
   }
 }
@@ -45,8 +50,9 @@ class MapSampleState extends State<MapSample> {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: Text('To the lake!'),
+        // onPressed: _goToTheLake,
+        onPressed: () =>   Navigator.pushNamed(context, '/cloudfs'),
+        label: Text('Load a Cloud firestore example'),
         icon: Icon(Icons.directions_boat),
       ),
     );
