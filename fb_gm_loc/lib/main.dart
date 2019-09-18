@@ -1,65 +1,70 @@
 import 'dart:async';
-
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import './cloudfs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'user.dart';
 
-void main() => runApp(MyApp());
+import 'authentication_bloc/bloc.dart';
 
-class MyApp extends StatelessWidget {
+
+void main(){
+    final User user = User();
+
+    runApp(
+      BlocProvider(
+        builder: (context) => AuthenticationBloc(user: user)..dispatch(AppStarted()),
+        child:App(user: user),
+      )
+    );
+}
+
+class App extends StatelessWidget {
+  final User _user;
+
+  App({Key key, @required User user}):_user=user, super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Google Maps Demo',
-      home: MapSample(),
-      routes: {
-        '/cloudfs': (context) => CloudFSPage(),
-      },
+      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+          
+            switch (state) {
+              case Unauthenticated: return  LoginScreen();  break;
+              case Authenticated:   return HomeScreen();    break;  
+              default: SplashScreen(); break;
+            }
 
+        },
+      )
+      
     );
   }
 }
 
-class MapSample extends StatefulWidget {
-  @override
-  State<MapSample> createState() => MapSampleState();
-}
-
-class MapSampleState extends State<MapSample> {
-  Completer<GoogleMapController> _controller = Completer();
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        // onPressed: _goToTheLake,
-        onPressed: () =>   Navigator.pushNamed(context, '/cloudfs'),
-        label: Text('Load a Cloud firestore example'),
-        icon: Icon(Icons.directions_boat),
-      ),
+    return Container(
+      
     );
   }
+}
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
   }
 }
