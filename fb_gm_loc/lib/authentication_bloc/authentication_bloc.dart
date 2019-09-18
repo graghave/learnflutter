@@ -28,4 +28,16 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     }
 
   }
+
+  Stream<AuthenticationState> _mapAppStartedToState(  ) async* {
+
+  }  
+
+  Stream<AuthenticationState> _mapLoggedInToState(  ) async* {
+
+  }  
+
+  Stream<AuthenticationState> _mapLoggedOutToState(  ) async* {
+
+  }  
 }

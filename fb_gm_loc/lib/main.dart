@@ -13,7 +13,7 @@ void main(){
     runApp(
       BlocProvider(
         builder: (context) => AuthenticationBloc(user: user)..dispatch(AppStarted()),
-        child:App(user: user),
+        child:App(user),
       )
     );
 }
@@ -21,7 +21,8 @@ void main(){
 class App extends StatelessWidget {
   final User _user;
 
-  App({Key key, @required User user}):_user=user, super(key: key);
+  // App({Key key, @required User user}):_user=user, super(key: key);
+  App(this._user);
   
   @override
   Widget build(BuildContext context) {
@@ -29,15 +30,15 @@ class App extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           
-            switch (state) {
-              case Unauthenticated: return  LoginScreen();  break;
-              case Authenticated:   return HomeScreen();    break;  
-              default: SplashScreen(); break;
+            if(state is Unauthenticated){
+                return  LoginScreen();
+            }else if(state is Authenticated){
+                return HomeScreen();
+            }else{
+                return  SplashScreen();
             }
-
         },
       )
-      
     );
   }
 }
@@ -63,8 +64,8 @@ class HomeScreen extends StatelessWidget {
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+     return Scaffold(
+      body: Center(child: Text('Splash Screen')),
     );
   }
 }
