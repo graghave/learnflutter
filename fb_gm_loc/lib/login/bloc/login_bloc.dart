@@ -44,15 +44,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> _mapLoginWithGooglePressedToState() async* {
 
     try {
+      await _user.signOut();
       await _user.signInWithGoogle();
       yield LoginState.success();
-    } catch (_) {
+    } catch (e) {
+      print(e);
       yield LoginState.failure();
     }
   }
 
   Stream<LoginState> _mapLoginWithCredentialsPressedToState({ String email, String password, }) async* {
-    
+
     yield LoginState.loading();
     try {
       await _user.signInWithCredentials(email, password);
