@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../user.dart';
+import '../register/register.dart';
+
 // import 'package:flutter_firebase_login/register/register.dart';
 
 class CreateAccountButton extends StatelessWidget {
@@ -15,8 +17,7 @@ class CreateAccountButton extends StatelessWidget {
 
       onPressed: () {
         Navigator.of(context).push( MaterialPageRoute(builder: (context) {
-            // return RegisterScreen(user: _user);
-            return Container();
+            return RegisterScreen(user: _user);
           }),
         );
       },
