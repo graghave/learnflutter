@@ -9,10 +9,7 @@ import './bloc/login_bloc.dart';
 class LoginScreen extends StatelessWidget {
   final User _user;
 
-  LoginScreen({Key key, @required User user})
-      : assert(user != null),
-        _user = user,
-        super(key: key);
+  LoginScreen(User user):_user=user;
 
   @override
   Widget build(BuildContext context) {

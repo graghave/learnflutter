@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../authentication_bloc/bloc.dart';
 import './login.dart';
+import './login_button.dart';
+import './google_login_button.dart';
+import './create_account_button.dart';
 import '../user.dart';
 
 class LoginForm extends StatefulWidget {
   final User _user;
 
-  LoginForm({Key key, @required User User})
-      : assert(User != null),
-        _user = User,
+  LoginForm({Key key, @required User user})
+      : assert(user != null),
+        _user = user,
         super(key: key);
 
   State<LoginForm> createState() => _LoginFormState();
@@ -23,8 +26,7 @@ class _LoginFormState extends State<LoginForm> {
 
   User get _user => widget._user;
 
-  bool get isPopulated =>
-      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+  bool get isPopulated => _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
 
   bool isLoginButtonEnabled(LoginState state) {
     return state.isFormValid && isPopulated && !state.isSubmitting;
@@ -116,12 +118,10 @@ class _LoginFormState extends State<LoginForm> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         LoginButton(
-                          onPressed: isLoginButtonEnabled(state)
-                              ? _onFormSubmitted
-                              : null,
+                          onPressed: isLoginButtonEnabled(state) ? _onFormSubmitted : null,
                         ),
                         GoogleLoginButton(),
-                        CreateAccountButton(User: _user),
+                        CreateAccountButton(user: _user),
                       ],
                     ),
                   ),
@@ -142,23 +142,17 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _onEmailChanged() {
-    _loginBloc.dispatch(
-      EmailChanged(email: _emailController.text),
-    );
+
+    _loginBloc.dispatch( EmailChanged(email: _emailController.text), );
   }
 
   void _onPasswordChanged() {
-    _loginBloc.dispatch(
-      PasswordChanged(password: _passwordController.text),
-    );
+
+    _loginBloc.dispatch( PasswordChanged(password: _passwordController.text), );
   }
 
   void _onFormSubmitted() {
-    _loginBloc.dispatch(
-      LoginWithCredentialsPressed(
-        email: _emailController.text,
-        password: _passwordController.text,
-      ),
-    );
+    
+    _loginBloc.dispatch( LoginWithCredentialsPressed( email: _emailController.text, password: _passwordController.text, ),);
   }
 }

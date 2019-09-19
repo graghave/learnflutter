@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'user.dart';
 
 import 'authentication_bloc/bloc.dart';
+import 'login/login.dart';
 
 
 void main(){
@@ -31,7 +32,7 @@ class App extends StatelessWidget {
         builder: (context, state) {
           
             if(state is Unauthenticated){
-                return  LoginScreen();
+                return  LoginScreen( _user );
             }else if(state is Authenticated){
                 return HomeScreen();
             }else{
@@ -39,15 +40,6 @@ class App extends StatelessWidget {
             }
         },
       )
-    );
-  }
-}
-
-class LoginScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
     );
   }
 }
