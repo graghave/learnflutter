@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "473540929314-afuvst32no19a0ocr9vvv6505spb8p9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raghu.fb1",
+            "certificate_hash": "775b7e64f2a922fcd0e17c07ab5719680c4e0ca9"
+          }
+        },
+        {
           "client_id": "473540929314-oq81h6jgm7maqrqm6tunnvds6s5dd5ef.apps.googleusercontent.com",
           "client_type": 3
         }
