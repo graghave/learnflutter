@@ -1,15 +1,17 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import './user_data.dart';
 class User {
 
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
+
   User({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
         _googleSignIn = googleSignin ?? GoogleSignIn();
+
 
 
   Future<FirebaseUser> signInWithGoogle() async {
@@ -48,5 +50,23 @@ class User {
   Future<String> getUser() async {
     return (await _firebaseAuth.currentUser()).email;
   }
+  
+  Future<UserData> getUserData() async {
+    return UserData( 
+      email:    (await _firebaseAuth.currentUser()).email ,
+      uid:      (await _firebaseAuth.currentUser()).uid ,
+      name:     (await _firebaseAuth.currentUser()).displayName ,
+      photoUrl: (await _firebaseAuth.currentUser()).photoUrl ,
+    
+    );
+  }
+  
+
+  Future<String> userEmail()  async { return (await _firebaseAuth.currentUser()).email; }
+  Future<String> userId()     async { return (await _firebaseAuth.currentUser()).uid; }
+  Future<String> userName()   async { return (await _firebaseAuth.currentUser()).displayName; }
+  Future<String> userPhoto()  async { return (await _firebaseAuth.currentUser()).photoUrl; }
+
 
 }
+

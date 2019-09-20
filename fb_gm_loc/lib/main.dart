@@ -6,6 +6,7 @@ import 'user.dart';
 
 import 'authentication_bloc/bloc.dart';
 import 'login/login.dart';
+import 'home/home.dart';
 
 
 void main(){
@@ -34,7 +35,7 @@ class App extends StatelessWidget {
             if(state is Unauthenticated){
                 return  LoginScreen( _user );
             }else if(state is Authenticated){
-                return HomeScreen();
+                return HomeScreen(_user);
             }else{
                 return  SplashScreen();
             }
@@ -44,25 +45,25 @@ class App extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Center(child: Text('Home Screen')),
-          SizedBox(height: 20.0),
-          RaisedButton(
-            shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(30.0), ),
-            onPressed: (){   BlocProvider.of<AuthenticationBloc>(context).dispatch(LoggedOut());},
-            child: Text('Log Out!'),
-          )
-        ],
-      ),
-    );
-  }
-}
+// class HomeScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//      return Scaffold(
+//       body: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: <Widget>[
+//           Center(child: Text('Home Screen')),
+//           SizedBox(height: 20.0),
+//           RaisedButton(
+//             shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(30.0), ),
+//             onPressed: (){   BlocProvider.of<AuthenticationBloc>(context).dispatch(LoggedOut());},
+//             child: Text('Log Out!'),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class SplashScreen extends StatelessWidget {
   @override
