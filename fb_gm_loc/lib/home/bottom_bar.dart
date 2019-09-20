@@ -36,9 +36,13 @@ class BottomBar extends StatelessWidget {
 
           BottomNavigationBarItem(icon: Icon(Icons.star), title: Text('Start Trip')),
 
-          BottomNavigationBarItem( icon: Icon(Icons.train), title: Text('My Trips')),
+          // BottomNavigationBarItem( icon: Icon(Icons.train), title: Text('My Trips')),
 
-          BottomNavigationBarItem( icon: Icon(Icons.favorite), title: Text('Favourites')),
+          // BottomNavigationBarItem( icon: Icon(Icons.favorite), title: Text('Favourites')),
+
+          BottomNavigationBarItem( icon: Icon(Icons.picture_in_picture_alt), title: Text('Add Pic')),
+
+          BottomNavigationBarItem( icon: Icon(Icons.record_voice_over), title: Text('Review')),
 
         ],
 
