@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../user.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import './bottom_bar.dart';
 
 class HomeMap extends StatelessWidget {
   final User _user;
@@ -24,11 +25,7 @@ class HomeMap extends StatelessWidget {
           onMapCreated: (GoogleMapController controller) { _controller.complete(controller); },
         ),
 
-        // floatingActionButton: FloatingActionButton.extended(
-        //   onPressed: (){},
-        //   label: Text('To the lake!'),
-        //   icon: Icon(Icons.directions_boat),
-        // ),
+        bottomNavigationBar: BottomBar(_user),
       ); 
 
     ;
