@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:fb1/home/bloc/home_bloc.dart';
+import 'package:fb1/home/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,17 +19,17 @@ class HomeMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return new Scaffold(
-        
-        body: GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) { _controller.complete(controller); },
-        ),
-
-        bottomNavigationBar: BottomBar(_user),
-      ); 
-
-    ;
+     BlocBuilder<HomeBloc, HomeState>(
+       builder: (context, state) {
+         return Scaffold(
+                  body: GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: _kGooglePlex,
+                    onMapCreated: (GoogleMapController controller) { _controller.complete(controller); },
+                  ),
+                  bottomNavigationBar: BottomBar(_user),
+         ); 
+       },
+     );
   }
 }
