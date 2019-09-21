@@ -5,6 +5,7 @@ import 'package:fb1/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import '../user.dart';
 import './bottom_bar.dart';
 
@@ -71,14 +72,32 @@ class _HomeMapState extends State<HomeMap> {
     );
   }
 
-  Widget googleMap(){
-     final Completer<GoogleMapController> _controller = Completer();
-
-    return GoogleMap(
+  Widget googleMap() {
+    final Completer<GoogleMapController> _controller = Completer();
+    return FutureBuilder(
+      future: Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high),
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        CameraPosition curPos = CameraPosition(
+                                  target: LatLng((snapshot.data as Position).latitude,(snapshot.data as Position).longitude, ),
+                                  zoom: 14.4746,
+                                );
+        return GoogleMap(
               mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
+              initialCameraPosition: curPos,
               onMapCreated: (GoogleMapController controller) { _controller.complete(controller); },
             );
+      },
+    );
+    
+    // final Completer<GoogleMapController> _controller = Completer();
+    // // Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+ 
+    // return GoogleMap(
+    //           mapType: MapType.normal,
+    //           initialCameraPosition: _kGooglePlex,
+    //           onMapCreated: (GoogleMapController controller) { _controller.complete(controller); },
+    //         );
   }
 
   Widget myTrips(){

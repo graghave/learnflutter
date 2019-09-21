@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../user.dart';
 import '../user_data.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../models/trip_data.dart';
 
 class HomeDrawer extends StatelessWidget {
   final User _user;
@@ -14,6 +15,8 @@ class HomeDrawer extends StatelessWidget {
         initialData: null,
         // initialData: UserData(email:'',name:'', uid:'', photoUrl: ''),
         builder: (BuildContext context, AsyncSnapshot<UserData> snapshot) {
+          TripData td = TripData(snapshot.data.uid);
+          td.getLastTripId();
           return  Drawer(
               child: Column(
                 children: <Widget>[

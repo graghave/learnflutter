@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import './bloc.dart';
 import '../../user.dart';
+import '../../models/trip_data.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final User _user ;
@@ -48,17 +49,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Stream<HomeState> _mapTrackOldTripState(HomeEvent event) async* {
-    print('hbloc 2');
+      print('hbloc 2');
+      TripData td = TripData.bare();
+      td.startSavingPositions();
+      // int lid = td.getLastTripId();
+      // print("value in the bloc $lid");
       yield TrackOldTripState();
   }
 
   Stream<HomeState> _mapTrackNewTripState(HomeEvent event) async* {
     print('hbloc 3');
+    TripData td = TripData.bare();
+    td.startSavingPositions();
     yield TrackNewTripState();
   }
 
   Stream<HomeState> _mapStopTrackTripState(HomeEvent event) async* {
     print('hbloc 4');
+    TripData td = TripData.bare();
+    td.stopSavingPositions();
     yield InitialHomeState();
   }
 
