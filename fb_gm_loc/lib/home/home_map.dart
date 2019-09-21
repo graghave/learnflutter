@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:fb1/home/bloc/home_bloc.dart';
 import 'package:fb1/home/bloc/home_state.dart';
 import 'package:fb1/home/home.dart';
+import 'package:fb1/models/trip_data.dart';
+import 'package:fb1/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +34,25 @@ class _HomeMapState extends State<HomeMap> {
     zoom: 14.4746,
   );
  
+  void initState()  { 
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+      await getUsersData().then((snapshot){
+              UserData ud = snapshot[0];
+              var td = TripData(ud.uid);
+              int ltid = snapshot[1].documents[0]['tid'];
+              td.setLastId(ltid);
+              print("uid and ltid are as ${ud.uid} & $ltid");
+      });
+     
+  }
+  Future<List> getUsersData() async {
+      return [ await _user.getUserData(), await TripData.getLastTripId() ];
+  }
+
  Widget build(BuildContext context) {
     return Scaffold(
               

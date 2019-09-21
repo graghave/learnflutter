@@ -15,8 +15,6 @@ class HomeDrawer extends StatelessWidget {
         initialData: null,
         // initialData: UserData(email:'',name:'', uid:'', photoUrl: ''),
         builder: (BuildContext context, AsyncSnapshot<UserData> snapshot) {
-          TripData td = TripData(snapshot.data.uid);
-          td.getLastTripId();
           return  Drawer(
               child: Column(
                 children: <Widget>[

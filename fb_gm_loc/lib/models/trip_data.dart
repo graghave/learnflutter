@@ -16,13 +16,13 @@ class TripData {
   var gpslist = [];
   static StreamSubscription<Position> positionStream ;
 
-    int getLastTripId()   {
+    static Future<prefix0.QuerySnapshot> getLastTripId() async   {
 
     // Firestore.instance.collection('trip').add({'uid' : 'abcde', 'tid':1 });
-    int lastid = 10;
+    // int lastid = 10;
     
 
-    var snap = Firestore.instance.collection('trip')
+    return await Firestore.instance.collection('trip')
                       .where('uid', isEqualTo: 'abcd')
                       .orderBy('tid', descending: true)
                       .limit(1)
@@ -30,24 +30,30 @@ class TripData {
                       // .snapshots();
                       // .forEach((f) { ltid = f.documents[0]['tid']; print("$ltid");});
 
-    var a = FutureBuilder<QuerySnapshot>(
-      future: snap,
-      initialData: null,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                ltid = snapshot.data.documents[0]['tid'];
-                print("in futurebldr $ltid");
-                return Container();
-      },
-    );
-    print('already came here ');
-    return ltid;
+    // var a = FutureBuilder<QuerySnapshot>(
+    //   future: snap,
+    //   initialData: null,
+    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //             ltid = snapshot.data.documents[0]['tid'];
+    //             print("in futurebldr $ltid");
+    //             return Container();
+    //   },
+    // );
+    // print('already came here ');
+    // return ltid;
 
                       
   }
 
-  void startSavingPositions(){
+  void setLastId(int lid){
+    ltid = lid;
+  }
+
+  void startSavingPositions({bool newTrip : false}){
       var geolocator = Geolocator();
       var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+      
+      if(newTrip) ltid++;
 
       positionStream = geolocator.getPositionStream(locationOptions).listen(
             
@@ -61,8 +67,8 @@ class TripData {
   void stopSavingPositions(){
      print("gps arr is as $gpslist");    
      Firestore.instance.collection('trip').add( {
-         'uid': 'abcd',
-         'tid': 2,
+         'uid': uid,
+         'tid': ltid,
          'gps': gpslist,
       } );
 
