@@ -65,7 +65,7 @@ class TripData {
   }
 
   void stopSavingPositions(){
-     print("gps arr is as $gpslist");    
+     print("gps arr is as $gpslist  tid is $ltid uid is $uid ");    
      Firestore.instance.collection('trip').add( {
          'uid': uid,
          'tid': ltid,

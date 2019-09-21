@@ -37,6 +37,7 @@ class _HomeMapState extends State<HomeMap> {
   void initState()  { 
     super.initState();
     initData();
+    var tmp = Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
   void initData() async {
@@ -97,18 +98,23 @@ class _HomeMapState extends State<HomeMap> {
     final Completer<GoogleMapController> _controller = Completer();
     return FutureBuilder(
       future: Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high),
-      initialData: Position(longitude: 0.0, latitude: 0.0),
+      // initialData: Position(longitude: 0.0, latitude: 0.0),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        CameraPosition curPos = CameraPosition(
-                                  target: LatLng((snapshot.data as Position).latitude,(snapshot.data as Position).longitude, ),
-                                  zoom: 14.4746,
-                                );
-        return GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: curPos,
-              onMapCreated: (GoogleMapController controller) { _controller.complete(controller); },
-            );
+        if(snapshot.hasData){ 
+          CameraPosition curPos = CameraPosition(
+                                    target: LatLng((snapshot.data as Position).latitude,(snapshot.data as Position).longitude, ),
+                                    zoom: 14.4746,
+                                  );
+          return GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: curPos,
+                onMapCreated: (GoogleMapController controller) { _controller.complete(controller); },
+              );
+        } else {
+          return CircularProgressIndicator();
+        }   
       },
+      
     );
     
     // final Completer<GoogleMapController> _controller = Completer();
