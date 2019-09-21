@@ -18,3 +18,8 @@ class TrackNewTrip extends HomeEvent{
   String toString()  => 'Track_New_Trip';
   
 }
+
+class StopTrackTrip extends HomeEvent{
+  String toString()  => 'Stop_Track_Trip';
+  
+}

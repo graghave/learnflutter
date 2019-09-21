@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../user.dart';
 import '../user_data.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeDrawer extends StatelessWidget {
   final User _user;
@@ -38,6 +39,13 @@ class HomeDrawer extends StatelessWidget {
                       title: Text('My Favorites'),
                       onTap: (){},
                     ),
+
+                    ListTile(
+                      leading: Icon(FontAwesomeIcons.shareSquare),
+                      title: Text('Shared by Others'),
+                      onTap: (){},
+                    ),
+
 
                     ListTile(
                       leading: Icon(Icons.share),
