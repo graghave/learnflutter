@@ -22,12 +22,12 @@ class HomeDrawer extends StatelessWidget {
                 children: <Widget>[
 
                     UserAccountsDrawerHeader(
-                        accountName:  Text(snapshot.data.name ),
+                        accountName:  Text(snapshot.data.name ?? 'test' ),
                         accountEmail:  Text(snapshot.data.email),
 
                         currentAccountPicture: new CircleAvatar(
                           backgroundColor: Colors.brown,
-                          child: Image.network(snapshot.data.photoUrl)
+                          child: Image.network(snapshot.data.photoUrl ?? 'https://x.dpstatic.com/d/avatars/l/568/568651.jpg?1437236038')
                       ),
                     ),
 

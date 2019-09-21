@@ -76,7 +76,7 @@ class _HomeMapState extends State<HomeMap> {
     final Completer<GoogleMapController> _controller = Completer();
     return FutureBuilder(
       future: Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high),
-      initialData: null,
+      initialData: Position(longitude: 0.0, latitude: 0.0),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         CameraPosition curPos = CameraPosition(
                                   target: LatLng((snapshot.data as Position).latitude,(snapshot.data as Position).longitude, ),
