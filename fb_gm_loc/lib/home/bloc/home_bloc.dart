@@ -26,7 +26,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }else if(event is StopTrackTrip){
         yield* _mapStopTrackTripState(event);
 
+      }else if(event is MyTrips){
+        yield* _mapMyTripsState(event);
+
+      }else if(event is MyFavs){
+        yield* _mapMyFavsState(event);
+
+      }else if(event is TakePics){
+        yield* _mapTakePicsState(event);
+
+      }else if(event is AddReviews){
+        yield* _mapAddReviewsState(event);
+
       }
+      
   }
 
   Stream<HomeState> _mapIntialMapState(HomeEvent event) async* {
@@ -47,6 +60,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapStopTrackTripState(HomeEvent event) async* {
     print('hbloc 4');
     yield InitialHomeState();
+  }
+
+  Stream<HomeState> _mapMyTripsState(HomeEvent event) async* {
+    print('hbloc 5');
+    yield ShowMyTripsState();
+  }
+
+  Stream<HomeState> _mapMyFavsState(HomeEvent event) async* {
+    print('hbloc 6');
+    yield ShowMyFavsState();
+  }
+  
+  Stream<HomeState> _mapTakePicsState(HomeEvent event) async* {
+    print('hbloc 7');
+    yield AddPhotoState();
+  }
+
+  Stream<HomeState> _mapAddReviewsState(HomeEvent event) async* {
+    print('hbloc 8');
+    yield AddReviewState();
   }
 
 }   

@@ -1,3 +1,4 @@
+import 'package:fb1/mytrips/bloc/my_trips_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../user.dart';
@@ -8,18 +9,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomBar extends StatefulWidget {
   final User _user;
-  HomeState _homeState;
-  BottomBar(User u, HomeState hs):_user=u, _homeState = hs;
+  BottomBar(User u):_user=u;
 
-  _BottomBarState createState() => _BottomBarState(_homeState);
+  _BottomBarState createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
 
     HomeBloc _homeBloc;
-    HomeState _homeState;
-
-    _BottomBarState(HomeState hs):_homeState = hs;
 
   
     void initState() { 
@@ -28,20 +25,45 @@ class _BottomBarState extends State<BottomBar> {
     }
 
     Widget build(BuildContext context) {
-      print(" State type is as  ${_homeState.runtimeType}");
-      if(_homeState is TrackNewTripState || _homeState is TrackOldTripState){
-          return whenTracking(context);
+      HomeState cstate = _homeBloc.currentState;
+      print("State type is as  ${cstate.runtimeType}");
+      int index = getCurIndex(cstate);
+      if(cstate is TrackNewTripState || cstate is TrackOldTripState || cstate is AddPhotoState || cstate is AddReviewState){
+          return whenTracking(context,index);
         } else {
-          return whenNotTracking(context);
+          return whenNotTracking(context,index);
         }
     }
 
-    Widget whenTracking(BuildContext context) {
+    int getCurIndex(HomeState hs){
+      if(hs is TrackNewTripState || hs is TrackOldTripState || hs is InitialHomeState ){
+        return 0;
+      }else if(hs is ShowMyTripsState || hs is AddPhotoState){
+        return 1;
+      }else if(hs is ShowMyFavsState || hs is AddReviewState){
+        return 2;
+      }else{
+        print("did not meet any bottom nav select state");
+        return 0;
+      }  
+    }
+
+    Widget whenTracking(BuildContext context, int sel) {
+
+      _onTap(int index) async {
+          switch(index){
+            case 0: _homeBloc.dispatch(StopTrackTrip()); break;
+
+            case 1: _homeBloc.dispatch(TakePics()) ;  break;
+            case 2: _homeBloc.dispatch(AddReviews()); break;
+            default: break;
+          }
+       }
         return BottomNavigationBar(
 
           items: <BottomNavigationBarItem>[
 
-            BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.stopCircle), title: Text('Stop Trip')),
+            BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.stopCircle), title: Text('Stop Trip'), ),
 
             BottomNavigationBarItem( icon: Icon(Icons.picture_in_picture_alt), title: Text('Add Pic')),
 
@@ -49,16 +71,17 @@ class _BottomBarState extends State<BottomBar> {
 
           ],
 
-          currentIndex: 0,
-          fixedColor: Colors.deepPurple,
+          currentIndex: sel,
+          selectedItemColor: Colors.red,
           // onTap: _onTap,
-          onTap: (int sel){},
+          onTap: _onTap,
         
         );
       
     }  
 
-    Widget whenNotTracking(BuildContext context) {
+    Widget whenNotTracking(BuildContext context, int sel) {
+
          _onTap(int index) async {
 
             switch (index) {
@@ -78,6 +101,9 @@ class _BottomBarState extends State<BottomBar> {
                   elevation: 8.0,
                 );
                 break;
+
+              case 1: _homeBloc.dispatch(MyTrips()); break;  
+              case 2: _homeBloc.dispatch(MyFavs()); break;
               default: break;
             }
           }
@@ -94,7 +120,7 @@ class _BottomBarState extends State<BottomBar> {
 
               ],
 
-              currentIndex: 0,
+              currentIndex: sel,
               // fixedColor: Colors.deepPurple,
               selectedItemColor: Colors.red,
               onTap: _onTap,

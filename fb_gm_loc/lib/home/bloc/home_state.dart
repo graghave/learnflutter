@@ -26,3 +26,12 @@ class AddPhotoState extends HomeState {
 class AddReviewState extends HomeState {
   String toString() => 'Add_Review_State';
 }
+
+
+class ShowMyTripsState extends HomeState {
+  String toString() => 'Show_My_Trips_State';
+}
+
+class ShowMyFavsState extends HomeState {
+  String toString() => 'Show_My_Favs_State';
+}

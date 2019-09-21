@@ -21,5 +21,19 @@ class TrackNewTrip extends HomeEvent{
 
 class StopTrackTrip extends HomeEvent{
   String toString()  => 'Stop_Track_Trip';
-  
+}
+
+class MyTrips extends HomeEvent{
+  String toString() => 'My_Trips';
+}
+class MyFavs extends HomeEvent{
+  String toString() => 'My_Favs';
+}
+
+class TakePics extends HomeEvent{
+  String toString() => 'Take_Pics';
+}
+
+class AddReviews extends HomeEvent{
+  String toString() => 'Add_Reviews';
 }
