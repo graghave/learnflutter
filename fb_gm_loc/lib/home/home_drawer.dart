@@ -68,7 +68,7 @@ class HomeDrawer extends StatelessWidget {
                         child: ListTile(
                           leading: Icon(Icons.settings_power),
                           title: Text('Sign Out'),
-                          onTap: (){},
+                          onTap: (){ _user.signOut();},
                         )
                       ),
                     ),
