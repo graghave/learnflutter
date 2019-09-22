@@ -52,7 +52,7 @@ class TripData {
 
   void startSavingPositions({bool nt : false}){
       var geolocator = Geolocator();
-      var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+      var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 20);
       
 
       if(nt){ newTrip = nt; ltid++; }else{ newTrip = false ;}
