@@ -10,6 +10,10 @@ class TripData {
   static  String uid;
   static int ltid;
   static bool newTrip = false;
+  static bool tripStopped = false;
+
+  static final Duration saveDuration = Duration(seconds: 60);
+
   factory TripData(String userId) { uid = userId; return _singleton; }
   factory TripData.bare(){return _singleton;}
   TripData._internal();
@@ -53,9 +57,18 @@ class TripData {
   void startSavingPositions({bool nt : false}){
       var geolocator = Geolocator();
       var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 20);
-      
+      tripStopped = false;
+      gpslist.clear();
 
-      if(nt){ newTrip = nt; ltid++; }else{ newTrip = false ;}
+      if(nt){ 
+        newTrip = nt; 
+        ltid++; 
+        insertNewTripData();
+      }else{
+         newTrip = false ;
+      }
+
+      Timer timer = Timer.periodic(saveDuration, updateTripData);
 
       positionStream = geolocator.getPositionStream(locationOptions).listen(
             
@@ -67,11 +80,13 @@ class TripData {
   }
 
   void stopSavingPositions(){
-     if( newTrip )  {
-        insertNewTripData();
-     } else {
-        updateTripData();
-     }
+    
+    //  if( newTrip )  {
+    //     insertNewTripData();
+    //  } else {
+    //     updateTripData();
+    //  }
+     tripStopped = true;
      positionStream.cancel();
   }
 
@@ -93,8 +108,8 @@ class TripData {
       } );
   }
 
-  void updateTripData( ) async {
-      await   Firestore.instance.collection('trip')
+  void updateTripData( Timer timer )  {
+         Firestore.instance.collection('trip')
                       .where('uid', isEqualTo: uid )
                       .where('tid', isEqualTo: ltid ) 
                       .getDocuments()
@@ -107,7 +122,10 @@ class TripData {
                               .document(snapshot.documents[0].documentID)
                               .updateData({'gps': tmp});
                           // insertNewTripData(tid:ltid, glist: tmp);
+                          gpslist.clear(); 
                       });
+
+         if(tripStopped == true) timer.cancel();             
   }
 
 }
