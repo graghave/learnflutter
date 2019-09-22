@@ -32,20 +32,7 @@ class TripData {
                       .orderBy('tid', descending: true)
                       .limit(1)
                       .getDocuments();
-                      // .snapshots();
-                      // .forEach((f) { ltid = f.documents[0]['tid']; print("$ltid");});
-
-    // var a = FutureBuilder<QuerySnapshot>(
-    //   future: snap,
-    //   initialData: null,
-    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //             ltid = snapshot.data.documents[0]['tid'];
-    //             print("in futurebldr $ltid");
-    //             return Container();
-    //   },
-    // );
-    // print('already came here ');
-    // return ltid;
+               
 
                       
   }
@@ -75,7 +62,7 @@ class TripData {
 
           (Position position) {
               print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
-              gpslist.add({ 'lat': position.latitude, 'lng':position.longitude});
+              gpslist.add({ 'lat': position.latitude, 'lng':position.longitude , 'dt': DateTime.now().toString()});
       });
   }
 
@@ -128,4 +115,7 @@ class TripData {
          if(tripStopped == true) timer.cancel();             
   }
 
+  static Stream<QuerySnapshot> getMyTrips(){
+      return Firestore.instance.collection('trip').where('uid', isEqualTo: uid ).snapshots();
+  }
 }
