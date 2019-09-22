@@ -44,7 +44,7 @@ class _HomeMapState extends State<HomeMap> {
       await getUsersData().then((snapshot){
               UserData ud = snapshot[0];
               var td = TripData(ud.uid);
-              int ltid = snapshot[1].documents[0]['tid'];
+              int ltid = ( snapshot[1] == null )?1:snapshot[1].documents[0]['tid'];
               td.setLastId(ltid);
               print("uid and ltid are as ${ud.uid} & $ltid");
       });

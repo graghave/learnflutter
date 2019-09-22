@@ -60,7 +60,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapTrackNewTripState(HomeEvent event) async* {
     print('hbloc 3');
     TripData td = TripData.bare();
-    td.startSavingPositions(newTrip: true);
+    td.startSavingPositions(nt: true);
     yield TrackNewTripState();
   }
 
